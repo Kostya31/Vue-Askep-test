@@ -76,6 +76,18 @@ export default {
         description: ''
       }
       this.anonimus = false
+    },
+    submit() {
+      fetch('https://jsonplaceholder.typicode.com/posts/1')
+        .then(function(response,redj) {
+          return console.log(redj,  response.json())
+        })
+        .then(function(json){
+          return console.log(json)
+        })
+    //   fetch('https://jsonplaceholder.typicode.com/posts/1')
+    //     .then((response) => response.json())
+    //     .then((json) => console.log(json));
     }
   },
   watch: {

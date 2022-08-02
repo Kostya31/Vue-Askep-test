@@ -23,29 +23,32 @@
             </modal>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
-
+  <alert :show="alertVisible">
+    <span>Відгук успішно відправлений!</span>
+  </alert>
 </template>
 
 <script>
 import FeedbackForm from "@/components/FeedbackForm"
 import FeedbackList from "@/components/FeedbackList"
+import Alert from "@/components/UI/Alert"
 
 export default {
   name: 'Profile',
   components: {
     FeedbackForm,
-    FeedbackList
+    FeedbackList,
+    Alert
   },
   data() {
     return {
       feedbacks: [],
       modalVisible: false,
       showFeedback: 5,
+      alertVisible: false
     }
   },
   methods: {
@@ -55,6 +58,8 @@ export default {
     createFeedback(feedback) {
       feedback.name !== "" && feedback.rating !== '' ? this.feedbacks.push(feedback) : ''
       this.modalVisible = false;
+      this.alertVisible = true;
+      setTimeout(() => this.alertVisible = false, 2000)
     }
   },
   computed: {
@@ -68,7 +73,7 @@ export default {
         return (sum / this.feedbacks.length).toFixed(1)
       }
     }
-  }
+  },
 }
 </script>
 

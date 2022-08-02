@@ -37,15 +37,11 @@ export default {
   computed: {
     showFeedback() {
       if (this.feedbacks.length) {
-        
         let arr = []
         for (let i = 0; i < this.fedbackToShow; i++) {
           if(i < this.feedbacks.length){
-            console.log(i)
             arr.push(this.feedbacks[i])
-          }
-          
-          
+          }    
         }
         return arr
       }
