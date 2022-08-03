@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 .alert {
-  position: absolute;
+  position: fixed;
   bottom: 15px;
   right: 15px;
   z-index: 5;

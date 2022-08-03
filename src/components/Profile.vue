@@ -16,7 +16,10 @@
             <div class="profile-info__row"><strong class="profile-info__label">Заклад:</strong><a href="# " target="blank">Відділення надання допомоги</a></div>
           </div>
           <div class="profile-info">
-            <feedback-list :show="showFeedback" :feedbacks="feedbacks"></feedback-list>
+            <div class="search">
+              <input type="text" v-model="searchQuery" placeholder="Пошук" class="form-control">
+            </div>
+            <feedback-list :show="showFeedback" :feedbacks="filteredList"></feedback-list>
             <button @click="showModal" class="btn btn-primary">Залишити відгук</button>
             <modal v-model:show="modalVisible">
               <feedback-form @setRating="getRating" @create="createFeedback"></feedback-form>
@@ -48,7 +51,8 @@ export default {
       feedbacks: [],
       modalVisible: false,
       showFeedback: 5,
-      alertVisible: false
+      alertVisible: false,
+      searchQuery: ''
     }
   },
   methods: {
@@ -72,6 +76,11 @@ export default {
         });
         return (sum / this.feedbacks.length).toFixed(1)
       }
+    },
+     filteredList() {
+      return this.feedbacks.filter(post => {
+        return post.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      })
     }
   },
 }
@@ -128,6 +137,16 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 0 0 15px;
+  }
+}
+.search {
+  margin-top: 20px;
+}
+a{
+  color: rgb(84, 186, 226);
+  text-decoration: none;
+  &:hover{
+    color: rgb(52, 148, 185);
   }
 }
 </style>
