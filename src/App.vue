@@ -92,7 +92,23 @@ body {
     background-color: rgb(214, 214, 214)
    }
 }
-
+.form-control {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  option {
+    font-size: 16px;
+    padding: 0.375rem 0.75rem;;
+  }
+  &:disabled {
+    background-color: #d6d6d6
+  }
+}
 .fd-column {
   display: flex;
   flex-direction: column;

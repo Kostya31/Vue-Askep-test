@@ -1,12 +1,15 @@
 <template>
   <div v-show="feedbacks.length > 0">
     <h3>Відгуки про лікаря:</h3>
-    <feedback-item :feedback="feedback" v-for="feedback in showFeedback" :key="feedback.key"></feedback-item>
+    <feedback-item 
+      :feedback="feedback" 
+      @delete="deleteItem"
+      v-for="feedback in showFeedback" 
+      :key="feedback.key"></feedback-item>
   </div>
   <p v-show="feedbacks.length === 0">Список відгуків пустий</p>
   
   <button class="btn" v-show="feedbacks.length > fedbackToShow" @click="showMore">Зававтажити відгуки</button>
-  
 
 </template>
 
@@ -26,12 +29,15 @@ export default {
   },
   data() {
     return {
-      fedbackToShow: this.show,
+      fedbackToShow: this.show
     }
   },
   methods: {
     showMore() {
       this.fedbackToShow += this.fedbackToShow
+    },
+    deleteItem(id) {
+      this.$emit('delete2', id)
     }
   },
   computed: {

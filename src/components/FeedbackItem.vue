@@ -5,6 +5,7 @@
       <div class="feedback-item__rating feedback-item__row"><strong>Рейтинг: </strong>{{ feedback.rating }}</div>
       <div class="feedback-item__description feedback-item__row" v-if="feedback.description !== ''">
         <strong>Опис: </strong>{{ feedback.description }}</div>
+      <button @click="deleteFeedback(feedback.id)">Видалити</button>
     </div>
     
   
@@ -17,6 +18,11 @@ export default {
     feedback: {
       type: Array,
       requared: true
+    }
+  },
+  methods: {
+    deleteFeedback(id) {
+      this.$emit('delete', id)
     }
   }
 }

@@ -1,38 +1,36 @@
 <template>
-  <div class="feedback">
-    <h2 class="title upper center-text">Залишити оцінку та відгук</h2>
-    <form class="form-feedback">
-      <div class="input-group row">
-        <label>Представтесь <span>*</span></label>
-        <div class="row fd-column">
-          <input type="text" class="form-control" :maxlength="maxName" :disabled="anonimus" placeholder="Прізвище імя по батькові" requared v-model="feedback.name" name="full-name">
-          <small>Залишилось символів: {{maxName - feedback.name.length}}</small>
-        </div>
-        <div class="row">
-          <input type="checkbox" v-model="anonimus" name="anonimus" id="anonimus">
-          <label for="anonimus">Анонімно</label>
-        </div>
-      </div>
 
-      <div class="input-group row">
-        <label>Оцініть роботу лікаря: <span>*</span></label>
-        <star-rating :required="true" :value="feedback.rating" @setRatingg="getRating"></star-rating>
+  <form class="form-feedback">
+    <div class="input-group row">
+      <label>Представтесь <span>*</span></label>
+      <div class="row fd-column">
+        <input type="text" class="form-control" :maxlength="maxName" :disabled="anonimus" placeholder="Прізвище імя по батькові" requared v-model="feedback.name" name="full-name">
+        <small>Залишилось символів: {{maxName - feedback.name.length}}</small>
+      </div>
+      <div class="row">
+        <input type="checkbox" v-model="anonimus" name="anonimus" id="anonimus">
+        <label for="anonimus">Анонімно</label>
+      </div>
+    </div>
 
-      </div>
-      <div class="input-group row">
-        <label>Напишіть відгук:</label>
-        <div class="row fd-column">
-          <textarea class="form-control" v-model="feedback.description" :maxlength="maxDesc" placeholder="Ваш відгук про лікаря" name="feedback-description"></textarea>
-          <small>Залишилось символів: {{maxDesc - feedback.description.length}}</small>
-        </div>
-      </div>
-      <div class="btn-group">
-        <button class="btn" @click.prevent="clearForm">Очистити</button>
-        <button :disabled="feedback.name && !feedback.rating == false ? false : true " class="btn btn-primary" @click.prevent="createFeedback">Відправити</button>
-      </div>
-    </form>
+    <div class="input-group row">
+      <label>Оцініть роботу лікаря: <span>*</span></label>
+      <star-rating :required="true" :value="feedback.rating" @setRatingg="getRating"></star-rating>
 
-  </div>
+    </div>
+    <div class="input-group row">
+      <label>Напишіть відгук:</label>
+      <div class="row fd-column">
+        <textarea class="form-control" v-model="feedback.description" :maxlength="maxDesc" placeholder="Ваш відгук про лікаря" name="feedback-description"></textarea>
+        <small>Залишилось символів: {{maxDesc - feedback.description.length}}</small>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn" @click.prevent="clearForm">Очистити</button>
+      <button :disabled="feedback.name && !feedback.rating == false ? false : true " class="btn btn-primary" @click.prevent="sendFeedback">Відправити</button>
+    </div>
+  </form>
+
 </template>
 
 <script>
@@ -76,6 +74,42 @@ export default {
         description: ''
       }
       this.anonimus = false
+    },
+    sendFeedback() {
+      
+      // axios.get('https://reqres.in/api/user/2')
+      //   .then(function (response) {
+      //     console.log('axios',response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
+
+      // =-------------fetch 
+      // fetch('https://reqres.in/api/user/2')
+      //   .then(function(res){
+      //     console.log('fetch',res);
+      //     return res.json()
+      //   })  
+      //   .then(function(data) {
+      //     console.log('data',data);
+      //   })
+
+      // ********************* POST ************************
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          body: JSON.stringify(this.feedback),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+        .then((response) => {
+          console.log('resp', response)
+          return response.json()
+        })
+        .then((json) => console.log(json));
+
+        this.createFeedback();
     }
   },
   watch: {
@@ -114,21 +148,6 @@ export default {
     span {
       color: rgb(218, 66, 66);
     }
-  }
-}
-
-.form-control {
-  display: block;
-  padding: 0.375rem 0.75rem;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-
-  &:disabled {
-    background-color: #d6d6d6
   }
 }
 </style>

@@ -1,15 +1,17 @@
 <template>
-    <div class="modal" v-if="show" @click="hideModal">
-<!--      <div class="modal_header">-->
-<!--        <slot></slot>-->
-<!--      </div>-->
-      <div class="modal_content" @click.stop>
-        <slot></slot>
-      </div>
-<!--      <div class="modal_footer">-->
-<!--        <slot></slot>-->
-<!--      </div>-->
+  <div class="modal" v-if="show" @click="hideModal">
+    <div class="modal_dialog">
+      <div class="modal_header">
+      <slot name="header"></slot>
     </div>
+    <div class="modal_body" @click.stop>
+      <slot name="body"></slot>
+    </div>
+    <div class="modal_footer">
+      <slot name="footer"></slot>
+    </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -31,8 +33,11 @@ export default {
 
 <style scoped>
 .modal {
+  content: '';
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  overflow-y: auto;
   top: 0;
   left: 0;
   right: 0;
@@ -41,7 +46,8 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.modal_content {
+
+.modal_dialog {
   background-color: #fff;
   border-radius: 12px;
   padding: 15px;
